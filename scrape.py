@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import os
-import sys
 import optparse
+from download import _download
 
 class Scraper:
     def __init__(self):
@@ -19,8 +19,16 @@ class Scraper:
         os.chdir('..')
         os.mkdir(self.get_args().path)
         print('[+] Creating directory')
+        return os.path.join(os.getcwd() + '/' + self.get_args().path)
 
+
+    def download_images(self, directory):
+        print("[+] Downloading images")
+        for _ in range(0, self.get_args().volume):
+            _download(directory,  self.get_args().term)
 
 if __name__ == '__main__':
     scraper = Scraper()
-    scraper.make_dir()
+    # path = scraper.make_dir()
+    # scraper.download_images(path)
+    # # scraper.print_progress()
