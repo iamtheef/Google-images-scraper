@@ -22,7 +22,7 @@ class Scraper:
         os.chdir('..')
         os.mkdir(self.get_args().path)
         print('[+] Creating directory')
-        return os.path.join(os.getcwd() + '/' + self.get_args().path)
+        return os.path.join(os.getcwd() + '/' + self.get_args().path + '/')
 
 
     def download_images(self, directory):
@@ -31,8 +31,11 @@ class Scraper:
         soup = BeautifulSoup(html.text, "html.parser")
         links = soup.find_all("img")
         print_progress(links)
+        i = 0
         for a in links:
-            _download(directory + '/', a['src'])
+            if i < int(self.get_args().volume):
+                _download(directory, a['src'])
+                i += 1
 
 if __name__ == '__main__':
     scraper = Scraper()
