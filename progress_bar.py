@@ -1,3 +1,5 @@
+import time
+
 def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█', printEnd = "\r"):
     """
     Call in a loop to create terminal progress bar
@@ -18,3 +20,11 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, 
     # Print New Line on Complete
     if iteration == total:
         print()
+
+
+
+def print_progress(items):
+    printProgressBar(0, len(items), prefix='Progress:', suffix='Complete', length=len(items))
+    for i, item in enumerate(items):
+        time.sleep(0.1)
+        printProgressBar(i + 1, len(items), prefix='Progress:', suffix='Complete', length=len(items))

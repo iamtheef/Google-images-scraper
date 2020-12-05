@@ -1,9 +1,8 @@
 import os
 import uuid
-import time
 from pathlib import Path
 import requests
-from progress_bar import printProgressBar
+
 
 
 def _download(path, url):
@@ -14,12 +13,6 @@ def _download(path, url):
         f.write(requests.get(url).content)
         f.close()
     except:
-        print('There was an error while donwloading')
+        print('There was an error while downloading')
 
 
-def print_progress(self, l):
-    items = list(range(0, 57))
-    printProgressBar(0, l, prefix='Progress:', suffix='Complete', length=50)
-    for i, item in enumerate(items):
-        time.sleep(0.1)
-        printProgressBar(i + 1, l, prefix='Progress:', suffix='Complete', length=50)

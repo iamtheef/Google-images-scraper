@@ -2,6 +2,9 @@
 
 import os
 import optparse
+import requests
+from bs4 import BeautifulSoup
+from progress_bar import print_progress
 from download import _download
 
 class Scraper:
@@ -24,11 +27,16 @@ class Scraper:
 
     def download_images(self, directory):
         print("[+] Downloading images")
-        for _ in range(0, self.get_args().volume):
-            _download(directory,  self.get_args().term)
+        html = requests.get('https://www.google.com/search?q=' + self.get_args().term + '&source=lnms&tbm=isch')
+        soup = BeautifulSoup(html.text, "html.parser")
+        links = soup.find_all("img")
+        print_progress(links)
+        for a in links:
+            _download(directory + '/', a['src'])
 
 if __name__ == '__main__':
     scraper = Scraper()
-    # path = scraper.make_dir()
-    # scraper.download_images(path)
-    # # scraper.print_progress()
+    path = scraper.make_dir()
+    scraper.download_images(path)
+    print('All done! Images should be saved at ', path)
+    print()
